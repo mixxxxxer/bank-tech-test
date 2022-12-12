@@ -59,7 +59,7 @@ Now, you can install Node using nvm (19 - Node version, used in this project):
 
 ```
 $ nvm install node
-$ nvm use  19
+$ nvm use 19
 ```
 
 ## How to use:
