@@ -1,11 +1,23 @@
 class Account {
-  constructor () {
+  constructor (id) {
     this.balance = 0;
-    this.transactions = [];
+    this.id = id;
+  }
+  
+  getId = () => {
+    return this.id;
   }
 
   getBalance = () => {
     return this.balance;
+  }
+
+  topUp = (sum) => {
+    this.balance += sum;
+  }
+
+  withdraw = (sum) => {
+    this.balance -= sum;
   }
 }
 
