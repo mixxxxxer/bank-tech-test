@@ -1,5 +1,6 @@
+/* eslint-disable class-methods-use-this */
 /**
- * Account class represent basic instant of bank account 
+ * Account class represent basic instant of bank account
  */
 class Account {
   constructor(id = this.#createId()) {
@@ -18,6 +19,7 @@ class Account {
   withdraw = (sum) => {
     this.balance -= sum;
   };
+
   /**
    * Generate random Id:
    * @returns id

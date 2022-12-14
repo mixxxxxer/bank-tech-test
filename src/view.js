@@ -1,5 +1,5 @@
 class View {
-
+  // eslint-disable-next-line class-methods-use-this
   transactionsPrinter = (transactions) => {
     let output = 'date || credit || debit || balance \n';
     transactions.forEach((transaction) => {
@@ -10,7 +10,6 @@ class View {
     });
     console.log(output);
   };
-
 }
 
 module.exports = View;

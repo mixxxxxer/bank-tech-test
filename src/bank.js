@@ -7,9 +7,7 @@ class Bank {
     this.currentAccount = null;
   }
 
-  getTransactions = () => {
-    return this.transactions;
-  };
+  getTransactions = () => this.transactions;
 
   createAccount = (id) => {
     this.currentAccount = new Account(id);
@@ -21,17 +19,17 @@ class Bank {
     return 'account deleted!';
   };
 
-  showBalance = () => this.currentAccount
-      ? this.currentAccount.getBalance()
-      : 'account does not exist'
+  showBalance = () => (this.currentAccount
+    ? this.currentAccount.getBalance()
+    : 'account does not exist');
 
   deposit = (sum) => {
     if (Boolean(this.currentAccount) && this.#isValidValue(sum)) {
       this.currentAccount.topUp(Number(sum));
       this.#createTransaction('debit', sum);
-      return('deposit success');
+      return ('deposit success');
     }
-    return('deposit false');
+    return ('deposit false');
   };
 
   withdraw = (sum) => {
@@ -40,20 +38,19 @@ class Bank {
         && sum <= this.currentAccount.getBalance()) {
       this.currentAccount.withdraw(Number(sum));
       this.#createTransaction('credit', sum);
-      return('withdraw success');
+      return ('withdraw success');
     }
-    return('withdraw false');
+    return ('withdraw false');
   };
 
   #createTransaction = (type, sum) => {
-    const newTransaction = {
+    this.transactions.unshift({
       account: this.currentAccount.getId(),
       date: new Date(),
       type,
       sum,
       balance: this.currentAccount.getBalance(),
-    };
-    this.transactions.unshift(newTransaction);
+    });
   };
 
   #isValidValue = (sum) => (/^([1-9]\d*)(\.[0-9]{1,2})?$/).test(sum);
