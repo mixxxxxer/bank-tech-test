@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const Bank = require('../src/bank');
 
 describe('Bank unit tests', () => {
@@ -89,7 +88,18 @@ describe('Bank unit tests', () => {
     testBank.withdraw(1000);
     const transactions = testBank.getTransactions();
     expect(transactions).toHaveLength(2);
-    expect(transactions[0].type).toBe('debit');
-    expect(transactions[1].type).toBe('credit');
+    expect(transactions[1].type).toBe('debit');
+    expect(transactions[0].type).toBe('credit');
+  });
+
+  it('print transactions after 3 operation', () => {
+    const testBank = new Bank();
+    testBank.createAccount();
+    testBank.deposit(3000);
+    testBank.withdraw(1000);
+    testBank.withdraw(10.55);
+    const transactions = testBank.transactionsPrinter();
+    console.log(transactions);
+    // expect(transactions).toBe('debit');
   });
 });
