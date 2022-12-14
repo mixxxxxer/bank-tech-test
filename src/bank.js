@@ -1,51 +1,58 @@
-const Account = require('./account')
+const Account = require('./account');
 
 class Bank {
-  constructor () {
+  constructor() {
     this.transactions = [];
-    this.accounts = [];
+    this.currentAccount = null;
   }
 
-  getTransactions = () => {
-    return this.transactions;
-  }
+  getTransactions = () => this.transactions;
 
-  getAccount = (accountId) => {
-    const user = this.accounts.find((account) => account.getId() === accountId);
-    return user;
-  }
+  createAccount = (id) => {
+    this.currentAccount = new Account(id);
+    return this.currentAccount.getId();
+  };
 
-  createAccount = () => {
-    const newAccount = new Account(this.createId());
-    this.accounts.push(newAccount);
-    return newAccount.getId();
-  }
+  deleteAccount = () => {
+    this.currentAccount = null;
+  };
 
-  showBalance = (accountId) => {
-    const account = this.getAccount(accountId);
-    return Boolean(account) ? account.getBalance() : "user does not exist" ;
-  }
+  showBalance = () => (this.currentAccount
+    ? this.currentAccount.getBalance()
+    : 'account does not exist');
 
-  deposite = (accountId, sum, date) => {
-    const account = this.getAccount(accountId);
-    if (Boolean(account) && sum > 0){
-      account.topUp(sum);
-      const newTransaction = {
-        account: accountId,
-        date: date,
-        type: 'deposite',
-        sum: sum
-      }
-      this.transactions.push(newTransaction);
-    } else return 'wrong input'
-  }
+  deposit = (sum) => {
+    if (Boolean(this.currentAccount) && this.#isValidValue(sum)) {
+      this.currentAccount.topUp(Number(sum));
+      this.#createTransaction('debit', sum);
+      return 'deposit success';
+    }
+    return 'deposit false';
+  };
 
-  private
+  withdraw = (sum) => {
+    if (Boolean(this.currentAccount)
+        && this.#isValidValue(sum)
+        && sum <= this.currentAccount.getBalance()) {
+      this.currentAccount.withdraw(Number(sum));
+      this.#createTransaction('credit', sum);
+      return 'withdraw success';
+    }
+    return 'withdraw false';
+  };
 
-  createId = () => {
-    return this.accounts.length + 1;
-  }
+  #createTransaction = (type, sum) => {
+    const newTransaction = {
+      account: this.currentAccount.getId(),
+      date: new Date(),
+      type,
+      sum,
+      balance: this.currentAccount.getBalance(),
+    };
+    this.transactions.push(newTransaction);
+  };
 
+  #isValidValue = (sum) => (/^([1-9]\d*)(\.[0-9]{1,2})?$/).test(sum);
 }
 
 module.exports = Bank;
