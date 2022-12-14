@@ -91,15 +91,4 @@ describe('Bank unit tests', () => {
     expect(transactions[1].type).toBe('debit');
     expect(transactions[0].type).toBe('credit');
   });
-
-  it('print transactions after 3 operation', () => {
-    const testBank = new Bank();
-    testBank.createAccount();
-    testBank.deposit(3000);
-    testBank.withdraw(1000);
-    testBank.withdraw(10.55);
-    const transactions = testBank.transactionsPrinter();
-    console.log(transactions);
-    // expect(transactions).toBe('debit');
-  });
 });

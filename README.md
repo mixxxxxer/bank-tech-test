@@ -32,8 +32,8 @@ If you have already installed Node:
   ```cd bank-tech-test```
 3) Install all modules of this project:
   ```
-  nvm use 19
-  npm install
+  % nvm use 19
+  % npm install
   ```
 
 If you haven't Node:
@@ -57,10 +57,39 @@ source ~/.zshrc
 
 Now, you can install Node using nvm (19 - Node version, used in this project):
 
-```
-$ nvm install node
-$ nvm use 19
+```bash
+ nvm install node
+ nvm use 19
 ```
 
 ## How to use:
+
+To check how the test task works, run the App.js file from the project root directory:
+```bash
+ cd bank-tech-test
+ node app
+```
+also you can try the basic functions to run the node and import the Bank class:
+
+```bash
+ node
+```
+```node
+ const Bank = require('./src/bank');
+```
+
+## Test Coverage
+
+100% test cover. To check this, run next command in root folder:
+```bash
+ npm run --coverage
+```
+or, if you Jest installed global:
+```bash
+ jest --coverage
+```
+
+## Notes
+
+In this solution, I tried to implement the most simple system according to the given requirement. The Account class represents the data model for a bank account, while the Bank class represents the controller for performing all operations associated with a bank account. Since the account owner is only a user of the bank, transactions are tracked directly at the bank to validate the possibility of a transaction (exclude debiting when there is not enough money in the account, replenishing a non-existent account, etc.). I wanted to bring my solution closer to the MVC structure - Account ( model ) - view - Bank (controller). The creation of a new account is performed by the Bank, since only it can provide access to financial transactions. The View class has only one method for printing a formatted bank statement.
 
